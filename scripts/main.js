@@ -5,23 +5,17 @@
  */
 
 import { initStays } from "./useStays.js";
+import { initModal } from "./modal.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const allStaysPromise = initStays();
 
-  const menuSearch = document.getElementById("menuSearch");
-  const modal = document.querySelector(".modal");
+  initModal();
 
-  if (menuSearch && modal) {
-    menuSearch.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-    });
-
-    const closeModalButton = modal.querySelector("p.flex.justify-end");
-    if (closeModalButton) {
-      closeModalButton.addEventListener("click", () => {
-        modal.classList.add("hidden");
-      });
-    }
+  try {
+    await allStaysPromise;
+    console.log("Inicializado correcto");
+  } catch (error) {
+    console.error("Error", error);
   }
 });
